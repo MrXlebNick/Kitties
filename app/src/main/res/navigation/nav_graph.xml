@@ -7,11 +7,22 @@
 
     <fragment
         android:id="@+id/main"
-        android:name="com.xlebnick.kitties.ui.main.MainFragment"
+        android:name="com.xlebnick.kitties.ui.main.KittyListFragment"
         tools:layout="@layout/main_fragment">
 
-<!--        <action-->
-<!--            android:id="@+id/action_main_to_"-->
-<!--            app:destination="@id/SecondFragment" />-->
+        <action
+            android:id="@+id/action_main_to_details"
+            app:destination="@id/details" />
     </fragment>
+
+    <fragment
+        android:id="@+id/details"
+        android:name="com.xlebnick.kitties.ui.details.KittyDetailsFragment"
+        tools:layout="@layout/fragment_kitty_details">
+        <argument
+            android:name="kitty"
+            app:argType="com.xlebnick.kitties.data.Kitty" />
+    </fragment>
+
+
 </navigation>

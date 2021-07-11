@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
+import androidx.annotation.IdRes
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.viewbinding.ViewBinding
 import com.xlebnick.kitties.utils.FragmentNavControllerHelper
 import dagger.android.support.AndroidSupportInjection
@@ -61,5 +63,8 @@ abstract class BaseFragment<Binding : ViewBinding> : DaggerFragment() {
 
     protected inline fun <reified VM : ViewModel> diViewModels() =
         viewModels<VM> { viewModelFactory }
+
+    protected inline fun <reified VM : ViewModel> diNavGraphViewModels(@IdRes navGraphId: Int) =
+        navGraphViewModels<VM>(navGraphId) { viewModelFactory }
 
 }
