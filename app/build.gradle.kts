@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-android-extensions")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 kapt {
@@ -66,8 +67,6 @@ android {
 }
 
 dependencies {
-    implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
     val daggerVersion = "2.24"
 
     val androidxAppCompatVersion = "1.2.0"
@@ -91,6 +90,18 @@ dependencies {
 
     val cameraxVersion = "1.0.0-rc01"
 
+    val retrofitVersion = "2.9.0"
+    val okhttpLoggingVersion = "4.2.0"
+    val livedataKtxVersion = "2.3.1"
+
+    val pagingVersion = "3.0.0"
+
+
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$livedataKtxVersion")
+
+    implementation("androidx.paging:paging-runtime:$pagingVersion")
+
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
     implementation("com.github.bumptech.glide:glide:$glideVersion")
@@ -105,6 +116,12 @@ dependencies {
     kapt("com.google.dagger:dagger-android-processor:$daggerVersion")
     implementation("com.google.dagger:dagger-android:$daggerVersion")
     implementation("com.google.dagger:dagger-android-support:$daggerVersion")
+
+    // retrofit
+
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:$okhttpLoggingVersion")
 
     //
     // androidx: https://developer.android.com/jetpack/androidx/versions/stable-channel
