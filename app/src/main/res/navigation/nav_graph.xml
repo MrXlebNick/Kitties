@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_kitty_details">
         <argument
             android:name="kitty"
-            app:argType="com.xlebnick.kitties.data.Kitty" />
+            app:argType="com.xlebnick.kitties.data.model.Kitty" />
     </fragment>
 
 

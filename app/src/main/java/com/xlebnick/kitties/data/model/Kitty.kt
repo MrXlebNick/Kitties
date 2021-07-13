@@ -1,4 +1,4 @@
-package com.xlebnick.kitties.data
+package com.xlebnick.kitties.data.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -7,7 +7,6 @@ import kotlinx.android.parcel.Parcelize
 data class Kitty(
     val url: String,
     val id: String,
-    val categories: List<String>,
-    val breeds: List<String>,
+    val breeds: List<Breed>,
     val isLiked: Boolean
 ) : Parcelable

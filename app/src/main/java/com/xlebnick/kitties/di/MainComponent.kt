@@ -2,6 +2,7 @@ package com.xlebnick.kitties.di
 
 import android.content.Context
 import com.xlebnick.kitties.App
+import com.xlebnick.kitties.data.remote.RemoteModule
 import com.xlebnick.kitties.di.modules.ActivityBindingModule
 import com.xlebnick.kitties.di.modules.FragmentBindingModule
 import com.xlebnick.kitties.di.modules.ViewModelModule
@@ -17,6 +18,7 @@ import javax.inject.Singleton
         FragmentBindingModule::class,
         ActivityBindingModule::class,
         ViewModelModule::class,
+        RemoteModule::class
     ]
 )
 @Singleton

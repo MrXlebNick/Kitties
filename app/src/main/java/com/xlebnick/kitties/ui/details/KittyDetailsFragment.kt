@@ -15,7 +15,7 @@ class KittyDetailsFragment : BaseFragment<FragmentKittyDetailsBinding>() {
 
     private val args: KittyDetailsFragmentArgs by navArgs()
 
-    private val viewModel: MainViewModel by diViewModels()
+    private val viewModel: MainViewModel by diActivityViewModels()
 
     override fun createBinding(
         inflater: LayoutInflater,
@@ -27,7 +27,7 @@ class KittyDetailsFragment : BaseFragment<FragmentKittyDetailsBinding>() {
         binding?.run {
             with(args.kitty) {
                 idView.text = id
-                breedsView.text = breeds.joinToString(", ")
+                breedsView.text = breeds.map { it.name }.joinToString(", ")
                 Glide.with(requireContext())
                     .load(url)
                     .into(image)
