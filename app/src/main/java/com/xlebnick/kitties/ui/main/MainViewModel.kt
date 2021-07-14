@@ -1,6 +1,5 @@
 package com.xlebnick.kitties.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -68,8 +67,7 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
                         repository.fetchKitties(currentKittiesPage, KITTIES_PAGE_SIZE, filters)
                     currentKittiesPage++
                 } catch (e: Exception) {
-                    // TODO: proper error handling
-                    Log.w("***", "failed to fetch another page of kitties", e)
+                    _error.emit(RequestError.FetchRequestError(e.message ?: "Unknown"))
                 }
             }
 
@@ -151,4 +149,5 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
 sealed class RequestError {
     class LikeRequestError(val message: String) : RequestError()
     class UnlikeRequestError(val message: String) : RequestError()
+    class FetchRequestError(val message: String) : RequestError()
 }

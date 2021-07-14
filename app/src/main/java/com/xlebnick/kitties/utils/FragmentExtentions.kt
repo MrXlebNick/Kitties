@@ -14,6 +14,7 @@ fun <Binding : ViewBinding> BaseFragment<Binding>.registerErrorListener(viewMode
             val message = when (error) {
                 is RequestError.LikeRequestError -> "Like failed with message: ${error.message}"
                 is RequestError.UnlikeRequestError -> "Dislike failed with message: ${error.message}"
+                is RequestError.FetchRequestError -> "Fetching kitties failed with message: ${error.message}"
             }
             Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
         }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.xlebnick.kitties.R
 import com.xlebnick.kitties.data.model.RequestStatus
 import com.xlebnick.kitties.databinding.FragmentCameraBinding
 import com.xlebnick.kitties.ui.base.BaseFragment
@@ -56,7 +57,11 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>() {
                 viewModel.upload(fileUtils.convertUriToMultipart(uri))
             },
                 {
-                    Toast.makeText(requireContext(), "Failed to take a photo", Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.photo_take_failed),
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 })
         }
@@ -66,12 +71,12 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>() {
             when (status) {
                 is RequestStatus.Error -> Toast.makeText(
                     context,
-                    "Photo failed to upload",
+                    getString(R.string.photo_failed),
                     Toast.LENGTH_LONG
                 ).show()
                 is RequestStatus.Success -> Toast.makeText(
                     context,
-                    "Photo uploaded!!",
+                    getString(R.string.photo_success),
                     Toast.LENGTH_LONG
                 ).show()
                 else -> Unit
