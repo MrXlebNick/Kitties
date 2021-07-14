@@ -8,5 +8,5 @@ data class Kitty(
     val url: String,
     val id: String,
     val breeds: List<Breed>,
-    val isLiked: Boolean
+    var isLiked: Boolean
 ) : Parcelable

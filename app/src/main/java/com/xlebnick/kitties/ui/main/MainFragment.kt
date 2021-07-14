@@ -39,7 +39,7 @@ class KittyListFragment : BaseFragment<MainFragmentBinding>() {
                         )
                     )
                 },
-                onLikeClick = viewModel::likeKitty
+                onLikeClick = viewModel::toggleLikeKitty
             ).also {
                 adapter = it
             }

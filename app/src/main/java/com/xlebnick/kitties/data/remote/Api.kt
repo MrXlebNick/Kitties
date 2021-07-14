@@ -27,7 +27,7 @@ interface Api {
     suspend fun getLikedKitties(@Query("sub_id") subId: String): List<LikeRemoteModel>
 
     @DELETE("favourites/{kittyId}")
-    suspend fun unlikeKitty(@Path("kittyId") kittyId: String)
+    suspend fun unlikeKitty(@Path("kittyId") kittyId: String, @Query("sub_id") subId: String)
 
     @GET("breeds")
     suspend fun getBreeds(): List<BreedRemoteModel>

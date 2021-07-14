@@ -50,7 +50,10 @@ class KittiesAdapter(
             binding.breeds.text = kitty.breeds.joinToString(", ") { it.name }
             binding.likeButton.setImageResource(if (kitty.isLiked) R.drawable.ic_liked else R.drawable.ic_like)
 
-            binding.likeButton.setOnClickListener { onLikeClick(kitty) }
+            binding.likeButton.setOnClickListener {
+                onLikeClick(kitty)
+                binding.likeButton.setImageResource(if (!kitty.isLiked) R.drawable.ic_liked else R.drawable.ic_like)
+            }
             binding.root.setOnClickListener { onClick(kitty) }
         }
     }

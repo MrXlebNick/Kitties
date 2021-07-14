@@ -94,13 +94,8 @@ dependencies {
     val okhttpLoggingVersion = "4.2.0"
     val livedataKtxVersion = "2.3.1"
 
-    val pagingVersion = "3.0.0"
-
-
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$livedataKtxVersion")
-
-    implementation("androidx.paging:paging-runtime:$pagingVersion")
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")

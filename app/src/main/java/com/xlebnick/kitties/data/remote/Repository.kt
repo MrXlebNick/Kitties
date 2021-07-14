@@ -1,7 +1,6 @@
 package com.xlebnick.kitties.data.remote
 
 import com.xlebnick.kitties.data.model.Breed
-import com.xlebnick.kitties.data.model.Kitty
 import com.xlebnick.kitties.data.remote.model.BreedRemoteModel
 import com.xlebnick.kitties.data.remote.model.KittyRemoteModel
 import com.xlebnick.kitties.data.remote.model.LikeKittyArg
@@ -17,7 +16,9 @@ class Repository @Inject constructor(private val api: Api) {
     suspend fun fetchLiked(): List<LikeRemoteModel> =
         api.getLikedKitties("some user")
 
-    suspend fun likeKitty(kitty: Kitty) = api.likeKitty(LikeKittyArg(kitty.id, "some user"))
+    suspend fun likeKitty(kittyId: String) = api.likeKitty(LikeKittyArg(kittyId, "some user"))
+    suspend fun unlikeKitty(kittyId: String) = api.unlikeKitty(kittyId, "some user") // doesn
+    // 't work, documentation is outdated
 
     suspend fun fetchBreeds(): List<BreedRemoteModel> =
         api.getBreeds()

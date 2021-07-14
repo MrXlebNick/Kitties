@@ -33,7 +33,7 @@ class KittyDetailsFragment : BaseFragment<FragmentKittyDetailsBinding>() {
                     .into(image)
 
                 likeButton.setImageResource(if (isLiked) R.drawable.ic_liked else R.drawable.ic_like)
-                likeButton.setOnClickListener { viewModel.likeKitty(this) }
+                likeButton.setOnClickListener { viewModel.toggleLikeKitty(this) }
             }
         }
     }

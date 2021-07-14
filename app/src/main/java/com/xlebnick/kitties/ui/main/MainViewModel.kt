@@ -72,9 +72,16 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
         }
     }
 
-    fun likeKitty(kitty: Kitty) {
+    fun toggleLikeKitty(kitty: Kitty) {
         viewModelScope.launch {
-            repository.likeKitty(kitty)
+            if (kitty.isLiked) {
+                repository.unlikeKitty(kitty.id)
+            } else {
+                repository.likeKitty(kitty.id)
+            }
+            val savedKitties = _kitties.value?.toMutableList() ?: return@launch
+            savedKitties.map { if (it.id == kitty.id) it.copy(isLiked = !it.isLiked) else it }
+            _kitties.value = savedKitties
         }
     }
 
