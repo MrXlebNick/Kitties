@@ -14,7 +14,11 @@ import com.xlebnick.kitties.data.model.Kitty
 import com.xlebnick.kitties.data.model.Like
 import com.xlebnick.kitties.data.remote.Repository
 import com.xlebnick.kitties.data.remote.model.KittyRemoteModel
+import com.xlebnick.kitties.data.remote.model.LikeResponse
+import com.xlebnick.kitties.data.remote.model.STATUS_SUCCESS
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,11 +30,16 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
     val breeds: LiveData<List<Breed>> =
         liveData { emit(repository.fetchBreeds().map { it.asBreed() }) }
 
+    private val kittiesList = mutableListOf<Kitty>()
     private val _kitties = MutableLiveData<List<Kitty>>()
     val kitties: LiveData<List<Kitty>> = _kitties
 
+    private val likesList = mutableListOf<Like>()
     private val _likedKitties = MutableLiveData<List<Like>>()
     val likedKitties: LiveData<List<Like>> = _likedKitties
+
+    private val _error = MutableSharedFlow<RequestError>()
+    val error: SharedFlow<RequestError> = _error
 
     private var currentKittiesPage = 0
     private var breedFilter: Breed? = null
@@ -42,7 +51,9 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
 
     private fun loadLiked(): Job {
         return viewModelScope.launch {
-            _likedKitties.value = repository.fetchLiked().map { it.asLike() }
+            likesList.clear()
+            likesList.addAll(repository.fetchLiked().map { it.asLike() })
+            _likedKitties.value = likesList
         }
     }
 
@@ -63,11 +74,11 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
             }
 
             joinAll(kittiesLoadingJob, likedLoadingJob)
-            val existingKitties = _kitties.value?.toMutableList() ?: mutableListOf()
             val newKitties = kitties?.map { kitty ->
                 kitty.asKitty(_likedKitties.value?.any { it.imageId == kitty.id } == true)
             } ?: listOf()
-            _kitties.value = existingKitties + newKitties
+            kittiesList.addAll(newKitties)
+            _kitties.value = kittiesList
 
         }
     }
@@ -75,15 +86,57 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
     fun toggleLikeKitty(kitty: Kitty) {
         viewModelScope.launch {
             if (kitty.isLiked) {
-                repository.unlikeKitty(kitty.id)
+                val likeId = likesList.firstOrNull { it.imageId == kitty.id }?.id
+                unlikeKitty(likeId, kitty.id)
             } else {
-                repository.likeKitty(kitty.id)
+                likeKitty(kitty.id, kitty.url)
             }
-            val savedKitties = _kitties.value?.toMutableList() ?: return@launch
-            savedKitties.map { if (it.id == kitty.id) it.copy(isLiked = !it.isLiked) else it }
-            _kitties.value = savedKitties
         }
     }
+
+    fun unlikeKitty(like: Like) {
+        viewModelScope.launch {
+            unlikeKitty(like.id, like.imageId)
+        }
+    }
+
+    private suspend fun unlikeKitty(likeId: String?, kittyId: String) {
+        val response = try {
+            repository.unlikeKitty(likeId = likeId!!)
+        } catch (e: Throwable) {
+            LikeResponse(e.message ?: "Unknown", null, status = 0)
+        }
+        if (response.message == STATUS_SUCCESS) {
+            likesList.remove(likesList.firstOrNull { it.id == likeId })
+            _likedKitties.value = likesList
+
+            kittiesList.find { it.id == kittyId }?.run {
+                isLiked = false
+            }
+            _kitties.value = kittiesList
+        } else {
+            _error.emit(RequestError.UnlikeRequestError(response.message))
+        }
+    }
+
+    private suspend fun likeKitty(kittyId: String, kittyUrl: String) {
+        val response = try {
+            repository.likeKitty(kittyId = kittyId)
+        } catch (e: Throwable) {
+            LikeResponse(e.message ?: "Unknown", null, status = 0)
+        }
+        if (response.message == STATUS_SUCCESS && response.id != null) {
+            likesList.add(Like(kittyId, response.id, kittyUrl))
+            _likedKitties.value = likesList
+            kittiesList.find { it.id == kittyId }?.run {
+                isLiked = true
+            }
+            _kitties.value = kittiesList
+        } else {
+            _error.emit(RequestError.LikeRequestError(response.message))
+        }
+    }
+
 
     fun applyFilter(breed: Breed?) {
         if (breed == breedFilter) return // don't reapply same filter
@@ -92,4 +145,9 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
         _kitties.value = listOf()
         loadPageOfKitties()
     }
+}
+
+sealed class RequestError {
+    class LikeRequestError(val message: String) : RequestError()
+    class UnlikeRequestError(val message: String) : RequestError()
 }

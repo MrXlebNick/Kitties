@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_main_to_cameraFragment"
             app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/action_main_to_likedFragment"
+            app:destination="@id/likedFragment" />
     </fragment>
 
     <fragment
@@ -31,6 +34,15 @@
         android:name="com.xlebnick.kitties.ui.camera.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera" />
+    <fragment
+        android:id="@+id/likedFragment"
+        android:name="com.xlebnick.kitties.ui.like.LikesFragment"
+        android:label="fragment_liked"
+        tools:layout="@layout/fragment_likes">
+        <action
+            android:id="@+id/action_likedFragment_to_main"
+            app:destination="@id/main" />
+    </fragment>
 
 
 </navigation>

@@ -11,4 +11,4 @@ fun KittyRemoteModel.asKitty(isLiked: Boolean) =
     Kitty(url, id, breeds.map { it.asBreed() }, isLiked)
 
 fun BreedRemoteModel.asBreed() = Breed(id, name)
-fun LikeRemoteModel.asLike() = Like(imageId, id)
+fun LikeRemoteModel.asLike() = Like(imageId, id, image.url)

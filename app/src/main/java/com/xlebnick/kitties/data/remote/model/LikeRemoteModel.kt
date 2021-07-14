@@ -4,5 +4,6 @@ data class LikeRemoteModel(
     val id: String,
     val userId: String,
     val subId: String,
-    val imageId: String
+    val imageId: String,
+    val image: KittyRemoteModel
 )

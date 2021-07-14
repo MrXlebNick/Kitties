@@ -7,6 +7,6 @@ import kotlinx.android.parcel.Parcelize
 data class Kitty(
     val url: String,
     val id: String,
-    val breeds: List<Breed>,
+    val breeds: List<Breed> = listOf(),
     var isLiked: Boolean
 ) : Parcelable

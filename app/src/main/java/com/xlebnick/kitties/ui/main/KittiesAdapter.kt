@@ -13,7 +13,7 @@ class KittiesAdapter(
     private val onClick: (Kitty) -> Unit,
     private val onLikeClick: (Kitty) -> Unit
 ) :
-    RecyclerView.Adapter<KittiesAdapter.KittiesViewHolder>() {
+    RecyclerView.Adapter<KittiesViewHolder>() {
 
     private val data = mutableListOf<Kitty>()
 
@@ -39,22 +39,23 @@ class KittiesAdapter(
         notifyDataSetChanged()
     }
 
-    class KittiesViewHolder(private val binding: KittiesListItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(kitty: Kitty, onClick: (Kitty) -> Unit, onLikeClick: (Kitty) -> Unit) {
-            Glide.with(binding.image)
-                .load(kitty.url)
-                .transform(CenterCrop())
-                .into(binding.image)
+}
 
-            binding.breeds.text = kitty.breeds.joinToString(", ") { it.name }
-            binding.likeButton.setImageResource(if (kitty.isLiked) R.drawable.ic_liked else R.drawable.ic_like)
+class KittiesViewHolder(private val binding: KittiesListItemBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+    fun bind(kitty: Kitty, onClick: (Kitty) -> Unit, onLikeClick: (Kitty) -> Unit) {
+        Glide.with(binding.image)
+            .load(kitty.url)
+            .transform(CenterCrop())
+            .into(binding.image)
 
-            binding.likeButton.setOnClickListener {
-                onLikeClick(kitty)
-                binding.likeButton.setImageResource(if (!kitty.isLiked) R.drawable.ic_liked else R.drawable.ic_like)
-            }
-            binding.root.setOnClickListener { onClick(kitty) }
+        binding.breeds.text = kitty.breeds.joinToString(", ") { it.name }
+        binding.likeButton.setImageResource(if (kitty.isLiked) R.drawable.ic_liked else R.drawable.ic_like)
+
+        binding.likeButton.setOnClickListener {
+            onLikeClick(kitty)
+            binding.likeButton.setImageResource(if (!kitty.isLiked) R.drawable.ic_liked else R.drawable.ic_like)
         }
+        binding.root.setOnClickListener { onClick(kitty) }
     }
 }

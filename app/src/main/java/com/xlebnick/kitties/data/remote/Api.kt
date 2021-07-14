@@ -4,6 +4,7 @@ import com.xlebnick.kitties.data.remote.model.BreedRemoteModel
 import com.xlebnick.kitties.data.remote.model.KittyRemoteModel
 import com.xlebnick.kitties.data.remote.model.LikeKittyArg
 import com.xlebnick.kitties.data.remote.model.LikeRemoteModel
+import com.xlebnick.kitties.data.remote.model.LikeResponse
 import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -24,13 +25,16 @@ interface Api {
     ): List<KittyRemoteModel>
 
     @POST("favourites")
-    suspend fun likeKitty(@Body likeKittyArg: LikeKittyArg)
+    suspend fun likeKitty(@Body likeKittyArg: LikeKittyArg): LikeResponse
 
     @GET("favourites")
     suspend fun getLikedKitties(@Query("sub_id") subId: String): List<LikeRemoteModel>
 
     @DELETE("favourites/{kittyId}")
-    suspend fun unlikeKitty(@Path("kittyId") kittyId: String, @Query("sub_id") subId: String)
+    suspend fun unlikeKitty(
+        @Path("kittyId") kittyId: String,
+        @Query("sub_id") subId: String
+    ): LikeResponse
 
     @GET("breeds")
     suspend fun getBreeds(): List<BreedRemoteModel>

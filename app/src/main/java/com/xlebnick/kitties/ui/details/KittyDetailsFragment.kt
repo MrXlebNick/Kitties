@@ -10,6 +10,7 @@ import com.xlebnick.kitties.R
 import com.xlebnick.kitties.databinding.FragmentKittyDetailsBinding
 import com.xlebnick.kitties.ui.base.BaseFragment
 import com.xlebnick.kitties.ui.main.MainViewModel
+import com.xlebnick.kitties.utils.registerErrorListener
 
 class KittyDetailsFragment : BaseFragment<FragmentKittyDetailsBinding>() {
 
@@ -33,8 +34,14 @@ class KittyDetailsFragment : BaseFragment<FragmentKittyDetailsBinding>() {
                     .into(image)
 
                 likeButton.setImageResource(if (isLiked) R.drawable.ic_liked else R.drawable.ic_like)
-                likeButton.setOnClickListener { viewModel.toggleLikeKitty(this) }
+                likeButton.setOnClickListener {
+                    viewModel.toggleLikeKitty(this)
+                    isLiked = !isLiked
+                    likeButton.setImageResource(if (isLiked) R.drawable.ic_liked else R.drawable.ic_like)
+                }
             }
         }
+
+        registerErrorListener(viewModel)
     }
 }

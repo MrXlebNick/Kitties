@@ -67,6 +67,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
     val daggerVersion = "2.24"
 
     val androidxAppCompatVersion = "1.2.0"

@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.xlebnick.kitties.databinding.MainFragmentBinding
 import com.xlebnick.kitties.ui.base.BaseFragment
+import com.xlebnick.kitties.utils.registerErrorListener
 
 class KittyListFragment : BaseFragment<MainFragmentBinding>() {
 
@@ -23,12 +24,19 @@ class KittyListFragment : BaseFragment<MainFragmentBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupListView()
-
         setupFilters()
-
         setupFab()
+        setupLikeButton()
+
+        registerErrorListener(viewModel)
 
         subscribeToViewModel()
+    }
+
+    private fun setupLikeButton() {
+        binding?.likeButton?.setOnClickListener {
+            navControllerHelper.navigateTo(KittyListFragmentDirections.actionMainToLikedFragment())
+        }
     }
 
     private fun setupFab() {
@@ -43,7 +51,7 @@ class KittyListFragment : BaseFragment<MainFragmentBinding>() {
                 onClick = { kitty ->
                     navControllerHelper.navigateTo(
                         KittyListFragmentDirections.actionMainToDetails(
-                            kitty
+                            kitty = kitty
                         )
                     )
                 },

@@ -22,6 +22,7 @@ class CameraViewModel @Inject constructor(private val api: Api) : ViewModel() {
                 api.upload(requestFile)
                 _uploadStatus.value = RequestStatus.Success(Unit)
             } catch (e: Exception) {
+                e.printStackTrace()
                 _uploadStatus.value = RequestStatus.Error(UploadError.GeneralError)
             }
             _uploadStatus.value = RequestStatus.Idle
