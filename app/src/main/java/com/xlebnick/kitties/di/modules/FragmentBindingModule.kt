@@ -1,6 +1,7 @@
 package com.xlebnick.kitties.di.modules
 
 import com.xlebnick.kitties.di.FragmentScoped
+import com.xlebnick.kitties.ui.camera.CameraFragment
 import com.xlebnick.kitties.ui.details.KittyDetailsFragment
 import com.xlebnick.kitties.ui.main.KittyListFragment
 import dagger.Module
@@ -16,5 +17,9 @@ abstract class FragmentBindingModule {
     @FragmentScoped
     @ContributesAndroidInjector
     abstract fun kittyDetailsFragment(): KittyDetailsFragment
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract fun cameraFragment(): CameraFragment
 
 }

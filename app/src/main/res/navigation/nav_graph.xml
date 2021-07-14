@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_main_to_details"
             app:destination="@id/details" />
+        <action
+            android:id="@+id/action_main_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
     </fragment>
 
     <fragment
@@ -23,6 +26,11 @@
             android:name="kitty"
             app:argType="com.xlebnick.kitties.data.model.Kitty" />
     </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.xlebnick.kitties.ui.camera.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" />
 
 
 </navigation>

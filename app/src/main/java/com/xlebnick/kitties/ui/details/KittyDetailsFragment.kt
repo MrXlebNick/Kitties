@@ -27,7 +27,7 @@ class KittyDetailsFragment : BaseFragment<FragmentKittyDetailsBinding>() {
         binding?.run {
             with(args.kitty) {
                 idView.text = id
-                breedsView.text = breeds.map { it.name }.joinToString(", ")
+                breedsView.text = breeds.joinToString(", ") { it.name }
                 Glide.with(requireContext())
                     .load(url)
                     .into(image)

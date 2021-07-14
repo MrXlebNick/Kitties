@@ -26,7 +26,15 @@ class KittyListFragment : BaseFragment<MainFragmentBinding>() {
 
         setupFilters()
 
+        setupFab()
+
         subscribeToViewModel()
+    }
+
+    private fun setupFab() {
+        binding?.fab?.setOnClickListener {
+            navControllerHelper.navigateTo(KittyListFragmentDirections.actionMainToCameraFragment())
+        }
     }
 
     private fun setupListView() {
