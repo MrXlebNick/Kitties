@@ -142,7 +142,8 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Vi
         if (breed == breedFilter) return // don't reapply same filter
         breedFilter = breed
         currentKittiesPage = 0
-        _kitties.value = listOf()
+        kittiesList.clear()
+        _kitties.value = kittiesList
         loadPageOfKitties()
     }
 }

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.xlebnick.kitties.databinding.FragmentLikesBinding
 import com.xlebnick.kitties.ui.base.BaseFragment
-import com.xlebnick.kitties.ui.main.KittyListFragmentDirections
 import com.xlebnick.kitties.ui.main.MainViewModel
 import com.xlebnick.kitties.utils.registerErrorListener
 
@@ -32,7 +31,7 @@ class LikesFragment : BaseFragment<FragmentLikesBinding>() {
 
     private fun setupLikeButton() {
         binding?.likeButton?.setOnClickListener {
-            navControllerHelper.navigateTo(KittyListFragmentDirections.actionMainToLikedFragment())
+            navControllerHelper.navigateTo(LikesFragmentDirections.actionLikedFragmentToMain())
         }
     }
 

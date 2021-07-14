@@ -66,7 +66,7 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>() {
             when (status) {
                 is RequestStatus.Error -> Toast.makeText(
                     context,
-                    "Photo failed to uploade",
+                    "Photo failed to upload",
                     Toast.LENGTH_LONG
                 ).show()
                 is RequestStatus.Success -> Toast.makeText(
