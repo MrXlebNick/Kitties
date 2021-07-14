@@ -83,4 +83,21 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>() {
             }
         }
     }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>, grantResults:
+        IntArray
+    ) {
+        if (permissionHelper.onCameraPermissionGranted(requestCode)) {
+            cameraHelper.startCamera(binding?.viewFinder?.surfaceProvider)
+        } else {
+            Toast.makeText(
+                requireContext(),
+                R.string.permissions_not_granted,
+                Toast.LENGTH_LONG
+            ).show()
+            requireActivity().finish()
+        }
+    }
 }

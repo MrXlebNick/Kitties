@@ -21,7 +21,8 @@ interface Api {
         @Query("page") page: Int,
         @Query("limit") limit: Int,
         @Query("breed_ids") breedIds: String?,
-        @Query("order") order: String = "ASC"
+        @Query("order") order: String = "ASC",
+        @Query("include_breeds") includeBreeds: Boolean = true
     ): List<KittyRemoteModel>
 
     @POST("favourites")
