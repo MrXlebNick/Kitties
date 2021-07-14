@@ -17,8 +17,7 @@ class Repository @Inject constructor(private val api: Api) {
         api.getLikedKitties("some user")
 
     suspend fun likeKitty(kittyId: String) = api.likeKitty(LikeKittyArg(kittyId, "some user"))
-    suspend fun unlikeKitty(likeId: String) = api.unlikeKitty(likeId, "some user") // doesn
-    // 't work, documentation is outdated
+    suspend fun unlikeKitty(likeId: String) = api.unlikeKitty(likeId, "some user")
 
     suspend fun fetchBreeds(): List<BreedRemoteModel> =
         api.getBreeds()
