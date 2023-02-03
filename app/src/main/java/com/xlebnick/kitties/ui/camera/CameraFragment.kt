@@ -54,7 +54,7 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>() {
         binding?.cameraCaptureButton?.setOnClickListener {
             // take photo with provided onSuccess callback
             cameraHelper.takePhoto({ uri ->
-                viewModel.upload(fileUtils.convertUriToMultipart(uri))
+                viewModel.upload(fileUtils.convertImageUriToMultipart(uri))
             },
                 {
                     Toast.makeText(

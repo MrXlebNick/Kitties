@@ -48,7 +48,7 @@ class FileUtils @Inject constructor(private val context: Context) {
     }
 
 
-    fun convertUriToMultipart(fileUri: Uri): MultipartBody.Part {
+    fun convertImageUriToMultipart(fileUri: Uri): MultipartBody.Part {
         val file = File(fileUri.path!!)
 
         // create RequestBody instance from file
