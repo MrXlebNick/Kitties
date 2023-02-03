@@ -49,13 +49,12 @@ class FileUtils @Inject constructor(private val context: Context) {
 
 
     fun convertUriToMultipart(fileUri: Uri): MultipartBody.Part {
-        val file: File = File(fileUri.path!!)
+        val file = File(fileUri.path!!)
 
         // create RequestBody instance from file
-        val requestFile: RequestBody = file
-            .asRequestBody(context.contentResolver.getType(fileUri)?.toMediaType())
+        val requestFile: RequestBody = file.asRequestBody("image/jpeg".toMediaType())
 
         // MultipartBody.Part is used to send also the actual file name
-        return MultipartBody.Part.createFormData("file", "file", requestFile)
+        return MultipartBody.Part.createFormData("file", file.name, requestFile)
     }
 }
