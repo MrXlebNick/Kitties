@@ -16,3 +16,4 @@ KITTIES_KEY=YOUR_API_KEY
 * Breeds are not returned from remote, probably an issue on the backend
 * No unit tests 
 * There is no pagination for the list in `without-paging`, and it partly doesn't work in `with-paging-doesnt-work`
+![device-2023-02-04-125258](https://user-images.githubusercontent.com/10089784/216763395-b8d7d835-ec9f-4179-aed3-8b25e6db80c6.gif)
